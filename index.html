@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jahnavi Lakarapu — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    :root {
+      --accent: #0078D4;
+      --accent-dark: #005A9E;
+      --accent-teal: #00B7C3;
+      --text-primary: #1B1B1B;
+      --text-secondary: #5F6368;
+      --text-tertiary: #8A8A8A;
+      --card-bg: #FFFFFF;
+      --card-border: #E1E1E1;
+      --window-bg: #F7F7F8;
+      --titlebar-bg: #FFFFFF;
+      --taskbar-bg: rgba(249, 249, 249, 0.78);
+      --start-bg: rgba(252, 252, 253, 0.9);
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --radius-sm: 4px;
+      --font-ui: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", "Cascadia Code", monospace;
+      --font-pixel: "Press Start 2P", system-ui, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      color: var(--text-primary);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #desktop {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.55), transparent 40%),
+        radial-gradient(circle at 80% 15%, rgba(166, 220, 235, 0.9), transparent 45%),
+        radial-gradient(circle at 75% 75%, rgba(99, 130, 214, 0.55), transparent 50%),
+        radial-gradient(circle at 25% 85%, rgba(0, 183, 195, 0.35), transparent 45%),
+        linear-gradient(160deg, #cfe8f3 0%, #a7cbe8 40%, #6f95d6 75%, #4f6fc4 100%);
+      background-size: 140% 140%;
+      animation: driftBg 30s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftBg {
+      from {
+        background-position: 0% 0%;
+      }
+
+      to {
+        background-position: 30% 20%;
+      }
+    }
+
+    /* ---------- HERO: entrance + hover pop ---------- */
+    .desktop-hero {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      text-align: center;
+      z-index: 2;
+      /* pointer-events ON so letters can be hovered */
+      pointer-events: auto;
+      width: min(900px, 94vw);
+    }
+
+    .hero-line {
+      font-family: var(--font-pixel);
+      font-size: clamp(14px, 2.8vw, 28px);
+      font-weight: 400;
+      color: #fff;
+      text-shadow: 0 2px 18px rgba(0, 40, 90, 0.45), 0 0 1px rgba(0, 0, 0, 0.3);
+      line-height: 1.55;
+      letter-spacing: 0.02em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0 0 0.35em;
+      cursor: default;
+    }
+
+    .hero-line .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(22px);
+      animation: charUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: calc(var(--i) * 38ms);
+      will-change: transform, font-weight;
+      cursor: pointer;
+    }
+
+    .hero-line.line2 .char {
+      animation-delay: calc(900ms + var(--i) * 38ms);
+    }
+
+    .hero-line .accent-name {
+      background: linear-gradient(105deg, #ffffff 0%, #c8e4ff 50%, #ffffff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-line .space {
+      width: 0.45em;
+      pointer-events: none;
+    }
+
+    @keyframes charUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-cursor {
+      display: inline-block;
+      width: 0.45em;
+      height: 0.95em;
+      background: #fff;
+      margin-left: 4px;
+      vertical-align: baseline;
+      opacity: 0;
+      border-radius: 1px;
+      animation:
+        blinkIn 0.4s steps(1) 2.1s forwards,
+        blink 1s steps(1) 2.1s infinite;
+    }
+
+    @keyframes blinkIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+
+    /* ---------- STICKY NOTES ---------- */
+    .icon-glyph.sticky-glyph {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(160deg, #C084FC 0%, #9333EA 100%);
+      border-radius: 3px;
+      box-shadow: 0 4px 10px rgba(147, 51, 234, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      position: relative;
+      overflow: hidden;
+      filter: none;
+    }
+
+    .sticky-fold {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 14px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.55);
+      clip-path: polygon(100% 0, 0 0, 100% 100%);
+    }
+
+    .window.notes-window {
+      width: min(480px, 92vw);
+      height: auto;
+      max-height: 80vh;
+    }
+
+    .titlebar.notes-titlebar {
+      background: #F6EEFF;
+      border-bottom-color: #E4CCFF;
+    }
+
+    .notes-body {
+      padding: 0;
+    }
+
+    .sticky-note-card {
+      background: linear-gradient(165deg, #F3E8FF 0%, #E9D5FF 100%);
+      padding: 28px 26px 26px;
+      min-height: 100%;
+    }
+
+    .sticky-note-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #5B21B6;
+      margin-bottom: 10px;
+    }
+
+    .sticky-note-card p {
+      color: #6B4E9E;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .notes-social-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .notes-social-row .btn {
+      background: #fff;
+      border-color: #DAB8FF;
+    }
+
+    .notes-social-row .btn:hover {
+      background: #F6EEFF;
+    }
+
+    .notes-message-block label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #5B21B6;
+      margin-bottom: 8px;
+    }
+
+    #notes-message {
+      width: 100%;
+      resize: vertical;
+      border-radius: 8px;
+      border: 1px solid #DAB8FF;
+      padding: 10px 12px;
+      font-family: var(--font-ui);
+      font-size: 13.5px;
+      color: #3D2160;
+      background: #fff;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    #notes-message:focus {
+      border-color: #9333EA;
+    }
+
+    #notes-send {
+      background: #9333EA;
+      border-color: #9333EA;
+      color: #fff;
+    }
+
+    #notes-send:hover {
+      background: #7E22CE;
+    }
+
+    /* ---------- TERMINAL ---------- */
+    .icon-glyph.terminal-glyph {
+      width: 40px;
+      height: 40px;
+      background: #0C0C0C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3ddc71;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      filter: none;
+    }
+
+    .window.terminal-window {
+      width: min(640px, 92vw);
+      height: auto;
+      max-height: 78vh;
+      background: #0C0C0C;
+      border-color: #2b2b2b;
+    }
+
+    .titlebar.terminal-titlebar {
+      background: #1a1a1a;
+      border-bottom-color: #2b2b2b;
+    }
+
+    .titlebar.terminal-titlebar .tb-title,
+    .titlebar.terminal-titlebar .tb-icon {
+      color: #c9c9c9;
+    }
+
+    .titlebar.terminal-titlebar .tb-btn {
+      color: #c9c9c9;
+    }
+
+    .titlebar.terminal-titlebar .tb-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .titlebar.terminal-titlebar .tb-btn.close:hover {
+      background: #E81123;
+      color: #fff;
+    }
+
+    .terminal-body {
+      padding: 20px 24px;
+      background: #0C0C0C;
+    }
+
+    .terminal-output {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #E6E6E6;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .terminal-output .t-prompt {
+      color: #3ddc71;
+    }
+
+    .terminal-output .t-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: #3ddc71;
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    .t-row {
+      opacity: 0;
+      animation: rowFade .35s ease forwards;
+    }
+
+    @keyframes rowFade {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .term-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 12px;
+    }
+
+    .term-table td {
+      padding: 3px 14px 3px 0;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: #E6E6E6;
+      vertical-align: top;
+    }
+
+    .term-table td.t-check {
+      color: #3ddc71;
+      width: 16px;
+    }
+
+    .term-table tr.t-head td {
+      color: #8a8a8a;
+      font-weight: 600;
+      padding-bottom: 6px;
+    }
+
+    .t-summary {
+      color: #3ddc71;
+    }
+
+    .t-render {
+      color: #FFB454;
+    }
+
+    /* ---------- JGPT (resume Q&A) ---------- */
+    .icon-glyph.jgpt-glyph {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(160deg, #d1668a 0%, #dbd1db 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 0.01em;
+      box-shadow: 0 4px 10px rgba(5, 150, 105, 0.45);
+      filter: none;
+    }
+
+    .tb-glyph.jgpt-glyph-mini {
+      background: linear-gradient(160deg, #d1668a 0%, #dbd1db 100%);
+      border-radius: 5px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 7px;
+    }
+
+    .sm-app .sm-glyph.jgpt-sm-glyph {
+      width: 28px;
+      height: 28px;
+      margin: 0 auto;
+      background: linear-gradient(160deg, #d1668a 0%, #dbd1db 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 8px;
+    }
+
+    .window.jgpt-window {
+      width: min(440px, 92vw);
+      height: min(580px, 80vh);
+    }
+
+    .titlebar.jgpt-titlebar {
+      background: #ECFDF5;
+      border-bottom-color: #A7F3D0;
+    }
+
+    .titlebar.jgpt-titlebar .tb-icon {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 11px;
+      color: #059669;
+    }
+
+    .window-body.jgpt-body {
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #jgpt-messages {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #FAFAFA;
+    }
+
+    .jgpt-msg {
+      max-width: 82%;
+      padding: 9px 13px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .jgpt-msg.bot {
+      align-self: flex-start;
+      background: #fff;
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      border-bottom-left-radius: 4px;
+    }
+
+    .jgpt-msg.user {
+      align-self: flex-end;
+      background: var(--accent);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .jgpt-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 10px 16px 0;
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      flex: 0 0 auto;
+    }
+
+    .jgpt-chip {
+      font-family: var(--font-ui);
+      font-size: 11.5px;
+      background: #F5F5F5;
+      border: 1px solid var(--card-border);
+      color: var(--text-secondary);
+      padding: 5px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .jgpt-chip:hover {
+      background: #ECECEC;
+    }
+
+    .jgpt-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px 16px;
+      background: #fff;
+      flex: 0 0 auto;
+    }
+
+    #jgpt-input {
+      flex: 1;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      outline: none;
+    }
+
+    #jgpt-input:focus {
+      border-color: var(--accent);
+    }
+
+    #jgpt-send {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    #jgpt-send:hover {
+      background: var(--accent-dark);
+    }
+
+    #icons {
+      position: absolute;
+      top: 22px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 5;
+    }
+
+    .icon {
+      width: 84px;
+      padding: 8px 4px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .icon:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .icon.selected {
+      background: rgba(255, 255, 255, 0.32);
+      outline: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .icon-glyph {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+    }
+
+    .icon-label {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+      line-height: 1.25;
+    }
+
+    .window {
+      position: absolute;
+      top: 6%;
+      left: 50%;
+      transform: translateX(-50%) scale(0.96);
+      width: min(920px, 92vw);
+      height: 82vh;
+      background: var(--window-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease, transform .22s cubic-bezier(.2, .8, .3, 1), box-shadow .2s ease;
+      z-index: 40;
+      will-change: left, top, transform;
+    }
+
+    .window.open {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      pointer-events: auto;
+    }
+
+    .window.dragged {
+      transform: none;
+    }
+
+    .window.open.dragged {
+      transform: none;
+    }
+
+    .window.dragging {
+      transition: none;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.38), 0 4px 16px rgba(0, 0, 0, 0.18);
+      cursor: grabbing;
+      user-select: none;
+    }
+
+    .window.maximized {
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: calc(100vh - 48px) !important;
+      transform: none !important;
+      border-radius: 0;
+    }
+
+    .window.maximized.open {
+      transform: none !important;
+    }
+
+    .titlebar {
+      height: 40px;
+      flex: 0 0 auto;
+      background: var(--titlebar-bg);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 0 12px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .titlebar:active {
+      cursor: grabbing;
+    }
+
+    .titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .titlebar-left span.tb-icon {
+      font-size: 14px;
+    }
+
+    .titlebar-left span.tb-title {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .titlebar-controls {
+      display: flex;
+      height: 100%;
+    }
+
+    .tb-btn {
+      width: 44px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .tb-btn:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .tb-btn.close:hover {
+      background: #E81123;
+      color: #fff;
+    }
+
+    .window-body {
+      flex: 1 1 auto;
+      overflow-y: auto;
+    }
+
+    .window-body::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .window-body::-webkit-scrollbar-thumb {
+      background: #c9c9c9;
+      border-radius: 6px;
+    }
+
+    .window-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .section {
+      padding: 40px 48px;
+      border-bottom: 1px solid #ECECEC;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 34px;
+      font-weight: 700;
+      flex: 0 0 auto;
+      box-shadow: 0 6px 18px rgba(0, 120, 212, 0.35);
+    }
+
+    .hero-text h1 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .hero-text .role {
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    #skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      background: #fff;
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+
+    #bio-text {
+      color: var(--text-secondary);
+      font-size: 14.5px;
+      line-height: 1.65;
+      max-width: 640px;
+      margin-bottom: 18px;
+    }
+
+    .link-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      background: #fff;
+      transition: background .15s, transform .1s;
+    }
+
+    .btn:hover {
+      background: #F2F2F2;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn.primary:hover {
+      background: var(--accent-dark);
+    }
+
+    #experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .exp-card {
+      background: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .exp-icon {
+      font-size: 20px;
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .exp-role {
+      font-weight: 700;
+      font-size: 14.5px;
+    }
+
+    .exp-org {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    .exp-meta {
+      color: var(--text-tertiary);
+      font-size: 12px;
+      margin-top: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .exp-tag {
+      margin-left: auto;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: #EAF4FF;
+      color: var(--accent-dark);
+      padding: 3px 8px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+
+    #projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .project-tile {
+      background: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: default;
+      transition: box-shadow .15s, transform .1s;
+    }
+
+    .project-tile:hover {
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .project-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .project-top .folder-emoji {
+      font-size: 20px;
+    }
+
+    .project-top .project-name {
+      font-weight: 700;
+      font-size: 14.5px;
+    }
+
+    .project-desc {
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      line-height: 1.55;
+      margin-bottom: 12px;
+      min-height: 52px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .tag-mini {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      background: #F5F5F5;
+      border: 1px solid #EAEAEA;
+      padding: 3px 7px;
+      border-radius: 5px;
+      color: var(--text-secondary);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .project-links a {
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--accent-dark);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .project-links a:hover {
+      text-decoration: underline;
+    }
+
+    #contact-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #taskbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 48px;
+      background: var(--taskbar-bg);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .taskbar-center {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 100%;
+    }
+
+    .task-btn {
+      width: 42px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      position: relative;
+      font-size: 18px;
+    }
+
+    .task-btn:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .task-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .tb-glyph {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .tb-glyph.sticky-glyph-mini {
+      background: linear-gradient(160deg, #C084FC 0%, #9333EA 100%);
+      border-radius: 3px;
+      color: #fff;
+      font-size: 11px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tb-glyph.sticky-glyph-mini .sticky-fold {
+      width: 8px;
+      height: 8px;
+    }
+
+    .tb-glyph.terminal-glyph-mini {
+      background: #0C0C0C;
+      border-radius: 5px;
+      color: #3ddc71;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    #start-btn {
+      font-size: 19px;
+    }
+
+    .search-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 999px;
+      padding: 7px 14px;
+      margin: 0 8px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      width: 220px;
+      cursor: pointer;
+    }
+
+    #systray {
+      position: absolute;
+      right: 10px;
+      top: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 10px;
+      font-size: 12px;
+      color: var(--text-primary);
+    }
+
+    #systray .st-icons {
+      display: flex;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    #clock {
+      text-align: right;
+      line-height: 1.2;
+      cursor: default;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    #clock:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    #clock .time {
+      font-weight: 600;
+      font-size: 12.5px;
+    }
+
+    #clock .date {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    #start-menu {
+      position: fixed;
+      bottom: 58px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px) scale(0.98);
+      width: 560px;
+      max-width: 92vw;
+      background: var(--start-bg);
+      backdrop-filter: blur(30px) saturate(1.5);
+      -webkit-backdrop-filter: blur(30px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 20px 24px 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s cubic-bezier(.2, .8, .3, 1);
+      z-index: 90;
+    }
+
+    #start-menu.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    #sm-search {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      background: #fff;
+      font-size: 13px;
+      font-family: var(--font-ui);
+      outline: none;
+      margin-bottom: 18px;
+    }
+
+    #sm-search:focus {
+      border-color: var(--accent);
+    }
+
+    .sm-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    #sm-apps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .sm-app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 4px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+
+    .sm-app:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .sm-app .sm-glyph {
+      font-size: 22px;
+    }
+
+    .sm-app .sm-name {
+      font-size: 11px;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .sm-app.hidden {
+      display: none;
+    }
+
+    #sm-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 12px;
+    }
+
+    #sm-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    #sm-user .sm-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    #sm-power {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #sm-power:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    #ctx-menu {
+      position: fixed;
+      z-index: 200;
+      width: 190px;
+      background: rgba(252, 252, 253, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      padding: 6px;
+      display: none;
+      font-size: 13px;
+    }
+
+    #ctx-menu.open {
+      display: block;
+    }
+
+    .ctx-item {
+      padding: 8px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .ctx-item:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .ctx-sep {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+      margin: 4px 2px;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 64px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(28, 28, 30, 0.92);
+      color: #fff;
+      font-size: 12.5px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      z-index: 150;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      .section {
+        padding: 26px 20px;
+      }
+
+      .search-pill {
+        display: none;
+      }
+
+      #start-menu {
+        width: 94vw;
+      }
+
+      #sm-apps {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero-line {
+        font-size: clamp(11px, 3.2vw, 18px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="desktop">
+
+    <div id="icons">
+      <div class="icon" data-open="window">
+        <div class="icon-glyph">🗂️</div>
+        <div class="icon-label">This PC</div>
+      </div>
+      <div class="icon" data-open="window" data-scroll="projects">
+        <div class="icon-glyph">📁</div>
+        <div class="icon-label">Projects</div>
+      </div>
+      <div class="icon" id="resume-icon"
+        data-href="https://drive.google.com/file/d/11EzWpaVaFAeNMLBRF00f_9GWCjo9NuBv/view?usp=drive_link">
+        <div class="icon-glyph">📄</div>
+        <div class="icon-label">Resume.pdf</div>
+      </div>
+      <div class="icon" id="recycle-icon">
+        <div class="icon-glyph">🗑️</div>
+        <div class="icon-label">Recycle Bin</div>
+      </div>
+      <div class="icon" id="notes-icon">
+        <div class="icon-glyph sticky-glyph"><span class="sticky-fold"></span>📝</div>
+        <div class="icon-label">Sticky Notes</div>
+      </div>
+      <div class="icon" id="terminal-icon">
+        <div class="icon-glyph terminal-glyph">&gt;_</div>
+        <div class="icon-label">Terminal</div>
+      </div>
+      <div class="icon" id="jgpt-icon">
+        <div class="icon-glyph jgpt-glyph">JGPT</div>
+        <div class="icon-label">Ask JGPT</div>
+      </div>
+    </div>
+
+    <div class="desktop-hero" id="desktop-hero">
+      <h1 class="hero-line line1" id="hero-line1"></h1>
+      <h1 class="hero-line line2" id="hero-line2"></h1>
+    </div>
+
+    <div class="window" id="main-window">
+      <div class="titlebar" id="window-titlebar">
+        <div class="titlebar-left">
+          <span class="tb-icon">🗂️</span>
+          <span class="tb-title">Jahnavi — Portfolio</span>
+        </div>
+        <div class="titlebar-controls">
+          <button class="tb-btn" id="btn-min" title="Minimize">—</button>
+          <button class="tb-btn" id="btn-max" title="Maximize">▢</button>
+          <button class="tb-btn close" id="btn-close" title="Close">✕</button>
+        </div>
+      </div>
+
+      <div class="window-body">
+
+        <section class="section" id="sec-about">
+          <div class="hero">
+            <div class="avatar">J</div>
+            <div class="hero-text">
+              <h1>Jahnavi</h1>
+              <div class="role">Full Stack Developer · Open Source Contributor</div>
+              <div id="skills-row">
+                <span class="chip">Java</span>
+                <span class="chip">Next.js</span>
+                <span class="chip">Spring Boot</span>
+                <span class="chip">Angular</span>
+                <span class="chip">React.js</span>
+                <span class="chip">Python</span>
+                <span class="chip">Django</span>
+                <span class="chip">MongoDB</span>
+              </div>
+              <p id="bio-text">
+                CS undergrad (CGPA 9.13) building full-stack apps with Spring Boot, Angular, React,
+                and Django. Strong in DSA, REST APIs, and SQL/MongoDB — currently an open source
+                contributor at NSOC '26 and always shipping something on the side.
+              </p>
+              <div class="link-row">
+                <a class="btn primary social-link" href="#" target="_blank">GitHub</a>
+                <a class="btn social-link" href="#" target="_blank">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="sec-experience">
+          <div class="section-eyebrow">Career</div>
+          <div class="section-title">Experience</div>
+          <div id="experience-list">
+            <div class="exp-card">
+              <div class="exp-icon">💼</div>
+              <div style="flex:1">
+                <div class="exp-role">Software Engineering Intern</div>
+                <div class="exp-org">CSIR – National Aerospace Laboratories (CSIR-NAL)</div>
+                <div class="exp-meta">Feb 2026 — May 2026 · Bengaluru</div>
+              </div>
+              <div class="exp-tag">Completed</div>
+            </div>
+            <div class="exp-card">
+              <div class="exp-icon">🌐</div>
+              <div style="flex:1">
+                <div class="exp-role">Open Source Contributor</div>
+                <div class="exp-org">Nexus Spring of Code 2026 (NSOC '26)</div>
+                <div class="exp-meta">2026 · Remote</div>
+              </div>
+              <div class="exp-tag">Active</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="sec-projects">
+          <div class="section-eyebrow">Work</div>
+          <div class="section-title">Projects</div>
+          <div id="projects-grid">
+            <div class="project-tile">
+              <div class="project-top"><span class="folder-emoji">📁</span><span class="project-name">Vroom</span></div>
+              <div class="project-desc">Two-wheeler ride-sharing platform for cost-effective, sustainable commuting,
+                with REST API integration and a responsive peer-to-peer UI.</div>
+              <div class="project-tags"><span class="tag-mini">Next.js</span><span class="tag-mini">REST APIs</span>
+              </div>
+              <div class="project-links"><a href="https://vroom-lemon.vercel.app/" target="_blank">↗ Live</a><a
+                  href="https://github.com/Jahnavi1661/Vroom" target="_blank">⌘ GitHub</a></div>
+            </div>
+            <div class="project-tile">
+              <div class="project-top"><span class="folder-emoji">📁</span><span class="project-name">Smart Study
+                  Planner</span></div>
+              <div class="project-desc">Productivity app with real-time reminders, useEffect-driven scheduling, and a
+                responsive design to improve time management.</div>
+              <div class="project-tags"><span class="tag-mini">React.js</span></div>
+              <div class="project-links"><a href="#" target="_blank">↗ Live</a><a href="#" target="_blank">⌘ GitHub</a>
+              </div>
+            </div>
+            <div class="project-tile">
+              <div class="project-top"><span class="folder-emoji">📁</span><span class="project-name">SkillSwap</span>
+              </div>
+              <div class="project-desc">Full-stack skill exchange platform with user authentication, messaging, and
+                RDBMS-backed data models.</div>
+              <div class="project-tags"><span class="tag-mini">Django</span><span class="tag-mini">Python</span><span
+                  class="tag-mini">SQL</span></div>
+              <div class="project-links"><a href="#" target="_blank">↗ Live</a><a href="#" target="_blank">⌘ GitHub</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="sec-contact">
+          <div class="section-eyebrow">Say hello</div>
+          <div class="section-title">Contact</div>
+          <div id="contact-links">
+            <a class="btn primary" href="mailto:jahnavil045@gmail.com">✉ Email</a>
+            <a class="btn" href="tel:+919686638478">📞 Call</a>
+            <a class="btn social-link" href="https://github.com/Jahnavi1661" target="_blank">GitHub</a>
+            <a class="btn social-link" href="https://www.linkedin.com/in/jahnavi-lakarapu-651313363/"
+              target="_blank">LinkedIn</a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- STICKY NOTES WINDOW -->
+    <div class="window notes-window" id="notes-window">
+      <div class="titlebar notes-titlebar" id="notes-titlebar">
+        <div class="titlebar-left">
+          <span class="tb-icon">📝</span>
+          <span class="tb-title">Sticky Note — Let's Connect</span>
+        </div>
+        <div class="titlebar-controls">
+          <button class="tb-btn" data-close-win="notes-window">—</button>
+          <button class="tb-btn" data-max-win="notes-window">▢</button>
+          <button class="tb-btn close" data-close-win="notes-window">✕</button>
+        </div>
+      </div>
+      <div class="window-body notes-body">
+        <div class="sticky-note-card">
+          <h2>Let's Connect</h2>
+          <p>Got an idea? I'm in.</p>
+          <div class="notes-social-row">
+            <a class="btn social-link" href="#" target="_blank">GitHub</a>
+            <a class="btn social-link" href="#" target="_blank">LinkedIn</a>
+          </div>
+          <div class="notes-message-block">
+            <label for="notes-message">Write a message</label>
+            <textarea id="notes-message" rows="4" placeholder="Say hi, pitch an idea, or report a bug..."></textarea>
+            <button class="btn" id="notes-send">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERMINAL WINDOW -->
+    <div class="window terminal-window" id="terminal-window">
+      <div class="titlebar terminal-titlebar" id="terminal-titlebar">
+        <div class="titlebar-left">
+          <span class="tb-icon">&gt;_</span>
+          <span class="tb-title">Terminal</span>
+        </div>
+        <div class="titlebar-controls">
+          <button class="tb-btn" data-close-win="terminal-window">—</button>
+          <button class="tb-btn" data-max-win="terminal-window">▢</button>
+          <button class="tb-btn close" data-close-win="terminal-window">✕</button>
+        </div>
+      </div>
+      <div class="window-body terminal-body">
+        <div class="terminal-output" id="terminal-output"></div>
+      </div>
+    </div>
+
+    <!-- JGPT WINDOW -->
+    <div class="window jgpt-window" id="jgpt-window">
+      <div class="titlebar jgpt-titlebar" id="jgpt-titlebar">
+        <div class="titlebar-left">
+          <span class="tb-icon">JGPT</span>
+          <span class="tb-title">Ask JGPT — trained on Jahnavi's resume</span>
+        </div>
+        <div class="titlebar-controls">
+          <button class="tb-btn" data-close-win="jgpt-window">—</button>
+          <button class="tb-btn" data-max-win="jgpt-window">▢</button>
+          <button class="tb-btn close" data-close-win="jgpt-window">✕</button>
+        </div>
+      </div>
+      <div class="window-body jgpt-body">
+        <div id="jgpt-messages"></div>
+        <div class="jgpt-suggestions" id="jgpt-suggestions">
+          <button class="jgpt-chip" data-q="What tech stack do you know?">Tech stack</button>
+          <button class="jgpt-chip" data-q="Tell me about your experience">Experience</button>
+          <button class="jgpt-chip" data-q="What projects have you built?">Projects</button>
+          <button class="jgpt-chip" data-q="Tell me about your education">Education</button>
+          <button class="jgpt-chip" data-q="How can I contact you?">Contact</button>
+        </div>
+        <div class="jgpt-input-row">
+          <input type="text" id="jgpt-input" placeholder="Ask about skills, projects, experience...">
+          <button id="jgpt-send">Send</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="taskbar">
+    <div class="taskbar-center">
+      <button class="task-btn" id="start-btn" title="Start">⊞</button>
+      <div class="search-pill" id="search-open">🔍 Search</div>
+      <button class="task-btn" id="task-portfolio" data-window-id="main-window" title="Portfolio">
+        <span class="tb-glyph">🗂️</span>
+      </button>
+      <button class="task-btn" id="task-terminal" data-window-id="terminal-window" title="Terminal">
+        <span class="tb-glyph terminal-glyph-mini">&gt;_</span>
+      </button>
+      <button class="task-btn" id="task-notes" data-window-id="notes-window" title="Sticky Notes">
+        <span class="tb-glyph sticky-glyph-mini"><span class="sticky-fold"></span>📝</span>
+      </button>
+      <button class="task-btn" id="task-jgpt" data-window-id="jgpt-window" title="Ask JGPT">
+        <span class="tb-glyph jgpt-glyph-mini">JGPT</span>
+      </button>
+      <button class="task-btn" data-scroll="contact" data-window-id="main-window" title="Contact">✉️</button>
+    </div>
+    <div id="systray">
+      <div class="st-icons"><span>📶</span><span>🔊</span><span>🔋</span></div>
+      <div id="clock">
+        <div class="time" id="clock-time">--:--</div>
+        <div class="date" id="clock-date">--</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="start-menu">
+    <input type="text" id="sm-search" placeholder="Type to search apps and sections...">
+    <div class="sm-label">Pinned</div>
+    <div id="sm-apps">
+      <button class="sm-app" data-scroll="about"><span class="sm-glyph">👤</span><span
+          class="sm-name">About</span></button>
+      <button class="sm-app" data-scroll="experience"><span class="sm-glyph">💼</span><span
+          class="sm-name">Experience</span></button>
+      <button class="sm-app" data-scroll="projects"><span class="sm-glyph">📁</span><span
+          class="sm-name">Projects</span></button>
+      <button class="sm-app" data-scroll="contact"><span class="sm-glyph">✉️</span><span
+          class="sm-name">Contact</span></button>
+      <button class="sm-app social-link" data-href="#"><span class="sm-glyph">🐙</span><span
+          class="sm-name">GitHub</span></button>
+      <button class="sm-app social-link" data-href="#"><span class="sm-glyph">💼</span><span
+          class="sm-name">LinkedIn</span></button>
+      <button class="sm-app social-link" data-href="https://jahnavi1661.github.io/SnakeGame/"><span
+          class="sm-glyph">🐍</span><span class="sm-name">Games</span></button>
+      <button class="sm-app" id="sm-resume"><span class="sm-glyph">📄</span><span class="sm-name">Resume</span></button>
+      <button class="sm-app" id="sm-jgpt"><span class="sm-glyph jgpt-sm-glyph">JGPT</span><span class="sm-name">Ask
+          JGPT</span></button>
+    </div>
+    <div id="sm-footer">
+      <div id="sm-user">
+        <div class="sm-avatar">J</div>Jahnavi
+      </div>
+      <button id="sm-power" title="Sleep">⏻</button>
+    </div>
+  </div>
+
+  <div id="ctx-menu">
+    <div class="ctx-item" id="ctx-refresh">🔄 Refresh</div>
+    <div class="ctx-item" id="ctx-open">🗂️ Open Portfolio</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-item" id="ctx-about">ℹ️ About this site</div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    (function () {
+      const win = document.getElementById('main-window');
+      const titlebar = document.getElementById('window-titlebar');
+      const startMenu = document.getElementById('start-menu');
+      const ctxMenu = document.getElementById('ctx-menu');
+      const toast = document.getElementById('toast');
+      const TASKBAR_H = 48;
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+      }
+
+      function openWindow(scrollTo) {
+        win.classList.add('open');
+        if (scrollTo) {
+          var el = document.getElementById('sec-' + scrollTo);
+          if (el) setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 260);
+        }
+        closeStartMenu();
+        syncTaskbarActive();
+      }
+      function closeWindow() {
+        win.classList.remove('open');
+        syncTaskbarActive();
+      }
+
+      var preMax = null;
+
+      function toggleMaximize() {
+        if (win.classList.contains('maximized')) {
+          win.classList.remove('maximized');
+          if (preMax) {
+            win.style.left = preMax.left;
+            win.style.top = preMax.top;
+            win.style.width = preMax.width;
+            win.style.height = preMax.height;
+            win.classList.add('dragged');
+          }
+        } else {
+          var rect = win.getBoundingClientRect();
+          preMax = {
+            left: rect.left + 'px',
+            top: rect.top + 'px',
+            width: rect.width + 'px',
+            height: rect.height + 'px'
+          };
+          win.classList.add('maximized');
+          win.classList.remove('dragging');
+        }
+      }
+
+      document.querySelectorAll('[data-open="window"]').forEach(function (el) {
+        el.addEventListener('click', function () { openWindow(el.dataset.scroll); });
+      });
+      document.querySelectorAll('.task-btn[data-scroll]').forEach(function (el) {
+        el.addEventListener('click', function () { openWindow(el.dataset.scroll); });
+      });
+
+      document.getElementById('btn-close').addEventListener('click', closeWindow);
+      document.getElementById('btn-min').addEventListener('click', closeWindow);
+      document.getElementById('btn-max').addEventListener('click', toggleMaximize);
+
+      titlebar.addEventListener('dblclick', function (e) {
+        if (e.target.closest('.tb-btn')) return;
+        toggleMaximize();
+      });
+
+      document.getElementById('recycle-icon').addEventListener('dblclick', function () { showToast('Recycle Bin is empty'); });
+      document.getElementById('recycle-icon').addEventListener('click', function () {
+        this.classList.add('selected');
+        document.querySelectorAll('.icon').forEach(function (i) { if (i !== this) i.classList.remove('selected'); }.bind(this));
+      });
+      document.querySelectorAll('.icon[data-open="window"]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          this.classList.add('selected');
+          document.querySelectorAll('.icon').forEach(function (i) { if (i !== this) i.classList.remove('selected'); }.bind(this));
+        });
+      });
+
+      /* ---------- macOS-style WINDOW DRAGGING ---------- */
+      var isDragging = false;
+      var dragOffsetX = 0;
+      var dragOffsetY = 0;
+
+      titlebar.addEventListener('pointerdown', function (e) {
+        if (e.target.closest('.tb-btn')) return;
+        if (win.classList.contains('maximized')) return;
+        if (!win.classList.contains('open')) return;
+
+        e.preventDefault();
+        isDragging = true;
+
+        var rect = win.getBoundingClientRect();
+
+        if (!win.classList.contains('dragged')) {
+          win.style.left = rect.left + 'px';
+          win.style.top = rect.top + 'px';
+          win.style.width = rect.width + 'px';
+          win.style.height = rect.height + 'px';
+          win.classList.add('dragged');
+        }
+
+        dragOffsetX = e.clientX - rect.left;
+        dragOffsetY = e.clientY - rect.top;
+
+        win.classList.add('dragging');
+        titlebar.setPointerCapture(e.pointerId);
+      });
+
+      titlebar.addEventListener('pointermove', function (e) {
+        if (!isDragging) return;
+
+        var newLeft = e.clientX - dragOffsetX;
+        var newTop = e.clientY - dragOffsetY;
+
+        var winW = win.offsetWidth;
+        var maxLeft = window.innerWidth - 80;
+        var maxTop = window.innerHeight - TASKBAR_H - 40;
+        var minLeft = -(winW - 80);
+        var minTop = 0;
+
+        newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+        newTop = Math.max(minTop, Math.min(newTop, maxTop));
+
+        win.style.left = newLeft + 'px';
+        win.style.top = newTop + 'px';
+      });
+
+      function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        win.classList.remove('dragging');
+        try { titlebar.releasePointerCapture(e.pointerId); } catch (_) { }
+      }
+
+      titlebar.addEventListener('pointerup', endDrag);
+      titlebar.addEventListener('pointercancel', endDrag);
+
+      /* Start menu */
+      function openStartMenu() { startMenu.classList.add('open'); document.getElementById('sm-search').focus(); }
+      function closeStartMenu() { startMenu.classList.remove('open'); }
+      document.getElementById('start-btn').addEventListener('click', function (e) {
+        e.stopPropagation();
+        startMenu.classList.contains('open') ? closeStartMenu() : openStartMenu();
+      });
+      document.getElementById('search-open').addEventListener('click', openStartMenu);
+
+      document.querySelectorAll('.sm-app[data-scroll]').forEach(function (el) {
+        el.addEventListener('click', function () { openWindow(el.dataset.scroll); });
+      });
+      document.querySelectorAll('.sm-app.social-link[data-href]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var href = el.getAttribute('data-href');
+          if (href && href !== '#') window.open(href, '_blank', 'noopener,noreferrer');
+          closeStartMenu();
+        });
+      });
+      document.getElementById('sm-resume').addEventListener('click', function () {
+        window.open('https://drive.google.com/file/usp=drive_link', '_blank', 'noopener,noreferrer');
+        closeStartMenu();
+      });
+      document.getElementById('sm-power').addEventListener('click', function () { showToast('This is just a portfolio — no naps allowed 😄'); });
+
+      document.getElementById('sm-search').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase();
+        document.querySelectorAll('.sm-app').forEach(function (app) {
+          var name = app.querySelector('.sm-name').textContent.toLowerCase();
+          app.classList.toggle('hidden', q && !name.includes(q));
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!startMenu.contains(e.target) && e.target.id !== 'start-btn') {
+          closeStartMenu();
+        }
+        ctxMenu.classList.remove('open');
+      });
+
+      document.getElementById('desktop').addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        ctxMenu.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
+        ctxMenu.style.top = Math.min(e.clientY, window.innerHeight - 160) + 'px';
+        ctxMenu.classList.add('open');
+      });
+      document.getElementById('ctx-refresh').addEventListener('click', function () { ctxMenu.classList.remove('open'); showToast('Desktop refreshed'); });
+      document.getElementById('ctx-open').addEventListener('click', function () { ctxMenu.classList.remove('open'); openWindow(); });
+      document.getElementById('ctx-about').addEventListener('click', function () { ctxMenu.classList.remove('open'); showToast('Windows-style portfolio · built for Jahnavi'); });
+
+      /* =========================================================
+         Letter-by-letter build + GSAP letter hover pop
+         (same effect as saurabh-kushwaha.vercel.app)
+         ========================================================= */
+      function buildHeroLine(el, text, options) {
+        options = options || {};
+        var accentFrom = options.accentFrom;
+        var accentTo = options.accentTo;
+        var appendCursor = options.appendCursor;
+        var html = '';
+        var charIndex = 0;
+
+        for (var i = 0; i < text.length; i++) {
+          var ch = text[i];
+          if (ch === ' ') {
+            html += '<span class="space" style="--i:' + charIndex + '">&nbsp;</span>';
+            charIndex++;
+            continue;
+          }
+          var inAccent = accentFrom != null && i >= accentFrom && i < accentTo;
+          var cls = inAccent ? 'char accent-name' : 'char';
+          html += '<span class="' + cls + '" style="--i:' + charIndex + '">' + ch + '</span>';
+          charIndex++;
+        }
+        if (appendCursor) html += '<span class="hero-cursor"></span>';
+        el.innerHTML = html;
+      }
+
+      buildHeroLine(
+        document.getElementById('hero-line1'),
+        "Hey, I'm Jahnavi!",
+        { accentFrom: 9, accentTo: 16 }
+      );
+      buildHeroLine(
+        document.getElementById('hero-line2'),
+        "welcome to my portfolio",
+        { appendCursor: true }
+      );
+
+      /* GSAP letter hover pop — hover letter scales up + lifts, neighbors soft-pop */
+      function attachLetterHover(lineEl) {
+        var chars = lineEl.querySelectorAll('.char');
+        chars.forEach(function (span, n) {
+          span.addEventListener('mouseenter', function () {
+            gsap.to(span, {
+              scale: 1.3,
+              y: -10,
+              duration: 0.35,
+              ease: 'power2.out',
+              overwrite: 'auto'
+            });
+            if (n > 0) {
+              gsap.to(chars[n - 1], {
+                scale: 1.1,
+                y: -5,
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+            if (n < chars.length - 1) {
+              gsap.to(chars[n + 1], {
+                scale: 1.1,
+                y: -5,
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+          });
+          span.addEventListener('mouseleave', function () {
+            gsap.to(span, {
+              scale: 1,
+              y: 0,
+              duration: 0.35,
+              ease: 'power2.out',
+              overwrite: 'auto'
+            });
+            if (n > 0) {
+              gsap.to(chars[n - 1], {
+                scale: 1,
+                y: 0,
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+            if (n < chars.length - 1) {
+              gsap.to(chars[n + 1], {
+                scale: 1,
+                y: 0,
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+          });
+        });
+      }
+
+      attachLetterHover(document.getElementById('hero-line1'));
+      attachLetterHover(document.getElementById('hero-line2'));
+
+
+      /* ---------- Sticky Notes + Terminal ---------- */
+      var topZ = 40;
+      function bringToFront(el) { el.style.zIndex = ++topZ; }
+
+      function openAppWindow(id, onFirstOpen) {
+        var el = document.getElementById(id);
+        var already = el.classList.contains('open');
+        el.classList.add('open');
+        bringToFront(el);
+        closeStartMenu();
+        if (!already && typeof onFirstOpen === 'function' && !el.dataset.played) {
+          el.dataset.played = '1';
+          onFirstOpen();
+        }
+        syncTaskbarActive();
+      }
+      function closeAppWindow(id) {
+        document.getElementById(id).classList.remove('open');
+        syncTaskbarActive();
+      }
+
+      document.getElementById('resume-icon').addEventListener('click', function () {
+        this.classList.add('selected');
+        document.querySelectorAll('.icon').forEach(function (i) { if (i !== this) i.classList.remove('selected'); }.bind(this));
+        var href = this.getAttribute('data-href');
+        if (href) window.open(href, '_blank', 'noopener,noreferrer');
+      });
+
+      document.getElementById('notes-icon').addEventListener('click', function () {
+        this.classList.add('selected');
+        document.querySelectorAll('.icon').forEach(function (i) { if (i !== this) i.classList.remove('selected'); }.bind(this));
+        openAppWindow('notes-window');
+      });
+      document.getElementById('terminal-icon').addEventListener('click', function () {
+        this.classList.add('selected');
+        document.querySelectorAll('.icon').forEach(function (i) { if (i !== this) i.classList.remove('selected'); }.bind(this));
+        openAppWindow('terminal-window', runTerminalIntro);
+      });
+      document.getElementById('jgpt-icon').addEventListener('click', function () {
+        this.classList.add('selected');
+        document.querySelectorAll('.icon').forEach(function (i) { if (i !== this) i.classList.remove('selected'); }.bind(this));
+        openAppWindow('jgpt-window', initJGPT);
+      });
+
+      /* Taskbar shortcut for Portfolio (This PC) window */
+      document.getElementById('task-portfolio').addEventListener('click', function () {
+        openWindow();
+      });
+
+      /* Taskbar shortcuts for Terminal + Sticky Notes */
+      document.getElementById('task-terminal').addEventListener('click', function () {
+        openAppWindow('terminal-window', runTerminalIntro);
+      });
+      document.getElementById('task-notes').addEventListener('click', function () {
+        openAppWindow('notes-window');
+      });
+      document.getElementById('task-jgpt').addEventListener('click', function () {
+        openAppWindow('jgpt-window', initJGPT);
+      });
+      document.getElementById('sm-jgpt').addEventListener('click', function () {
+        openAppWindow('jgpt-window', initJGPT);
+      });
+
+      document.querySelectorAll('[data-close-win]').forEach(function (btn) {
+        btn.addEventListener('click', function () { closeAppWindow(btn.dataset.closeWin); });
+      });
+      document.querySelectorAll('[data-max-win]').forEach(function (btn) {
+        btn.addEventListener('click', function () { document.getElementById(btn.dataset.maxWin).classList.toggle('maximized'); });
+      });
+
+      document.getElementById('notes-send').addEventListener('click', function () {
+        var msg = document.getElementById('notes-message').value.trim();
+        if (!msg) { showToast('Write something first \u270d\ufe0f'); return; }
+        window.location.href = 'mailto:jahnavil045@gmail.com?subject=' + encodeURIComponent("Let's Connect") + '&body=' + encodeURIComponent(msg);
+        showToast('Opening your email app...');
+      });
+
+      function runTerminalIntro() {
+        var out = document.getElementById('terminal-output');
+        var promptText = '@Jahnavi % show tech stack';
+        out.innerHTML = '<span class="t-prompt"></span><span class="t-cursor"></span>';
+        var promptEl = out.querySelector('.t-prompt');
+        var i = 0;
+        (function typeChar() {
+          if (i < promptText.length) {
+            promptEl.textContent += promptText[i];
+            i++;
+            setTimeout(typeChar, 32);
+          } else {
+            setTimeout(showTable, 300);
+          }
+        })();
+        function showTable() {
+          var cur = out.querySelector('.t-cursor');
+          if (cur) cur.remove();
+          var rows = [
+            ['\u2713', 'Language', 'Java, JavaScript, TypeScript'],
+            ['\u2713', 'Frontend', 'React.js, Next.js'],
+            ['\u2713', 'Styling', 'Tailwind CSS, Bootstrap, CSS'],
+            ['\u2713', 'Backend', 'Node.js, Express'],
+            ['\u2713', 'Database', 'MongoDB, PostgreSQL'],
+            ['\u2713', 'Dev Tools', 'Git, GitHub, Docker']
+          ];
+          var table = document.createElement('table');
+          table.className = 'term-table';
+          table.innerHTML = '<tr class="t-head"><td></td><td>Category</td><td>Technologies</td></tr>';
+          out.appendChild(document.createElement('br'));
+          out.appendChild(table);
+          rows.forEach(function (r, idx) {
+            setTimeout(function () {
+              var tr = document.createElement('tr');
+              tr.className = 't-row';
+              tr.innerHTML = '<td class="t-check">' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td>';
+              table.appendChild(tr);
+            }, idx * 180);
+          });
+          setTimeout(function () {
+            var summary = document.createElement('div');
+            summary.className = 't-row t-summary';
+            summary.textContent = '\u2713 6 of 6 stacks loaded successfully (100%)';
+            out.appendChild(summary);
+            var render = document.createElement('div');
+            render.className = 't-row t-render';
+            render.textContent = '\u2691 Render time: 6ms';
+            out.appendChild(render);
+          }, rows.length * 180 + 200);
+        }
+      }
+
+      function makeDraggable(winEl, barEl) {
+        var dragging = false, ox = 0, oy = 0;
+        barEl.addEventListener('pointerdown', function (e) {
+          if (e.target.closest('.tb-btn')) return;
+          if (winEl.classList.contains('maximized')) return;
+          if (!winEl.classList.contains('open')) return;
+          e.preventDefault();
+          dragging = true;
+          bringToFront(winEl);
+          var rect = winEl.getBoundingClientRect();
+          if (!winEl.classList.contains('dragged')) {
+            winEl.style.left = rect.left + 'px';
+            winEl.style.top = rect.top + 'px';
+            winEl.style.width = rect.width + 'px';
+            winEl.classList.add('dragged');
+          }
+          ox = e.clientX - rect.left;
+          oy = e.clientY - rect.top;
+          winEl.classList.add('dragging');
+          barEl.setPointerCapture(e.pointerId);
+        });
+        barEl.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          var nl = e.clientX - ox;
+          var nt = e.clientY - oy;
+          var ww = winEl.offsetWidth;
+          nl = Math.max(-(ww - 80), Math.min(nl, window.innerWidth - 80));
+          nt = Math.max(0, Math.min(nt, window.innerHeight - TASKBAR_H - 40));
+          winEl.style.left = nl + 'px';
+          winEl.style.top = nt + 'px';
+        });
+        function end(e) {
+          if (!dragging) return;
+          dragging = false;
+          winEl.classList.remove('dragging');
+          try { barEl.releasePointerCapture(e.pointerId); } catch (_) { }
+        }
+        barEl.addEventListener('pointerup', end);
+        barEl.addEventListener('pointercancel', end);
+      }
+      makeDraggable(document.getElementById('notes-window'), document.getElementById('notes-titlebar'));
+      makeDraggable(document.getElementById('terminal-window'), document.getElementById('terminal-titlebar'));
+      makeDraggable(document.getElementById('jgpt-window'), document.getElementById('jgpt-titlebar'));
+
+      /* ---------- JGPT: simple keyword-matched Q&A over resume data ---------- */
+      /* Not an AI model — just looks for keywords and returns a matching answer,
+         or a "don't have relevant info" fallback if nothing matches. */
+      var JGPT_KB = [
+        {
+          keywords: ['stack', 'skill', 'tech', 'technolog', 'language', 'know', 'proficient', 'framework', 'tool'],
+          answer: "Java, Python, C/C++, JavaScript, C#, and SQL are her core languages. On the frontend she works with Angular, React.js, Next.js, and Tailwind CSS; on the backend, Spring Boot (Java) and Django (Python). She also uses SQL Server, MongoDB, Git, GitHub, VS Code, and Postman."
+        },
+        {
+          keywords: ['experience', 'intern', 'work', 'job', 'company', 'csir', 'nal'],
+          answer: "She was a Software Engineering Intern at CSIR \u2013 National Aerospace Laboratories (CSIR-NAL) from Feb to May 2026, building full-stack internal portals with Spring Boot and Angular, implementing role-based access control, and writing REST APIs used by 100+ employees."
+        },
+        {
+          keywords: ['education', 'college', 'degree', 'university', 'cgpa', 'study', 'school'],
+          answer: "She's pursuing a B.Tech in Computer Science at New Horizon College of Engineering, Bengaluru (June 2022 \u2013 Present), with a CGPA of 9.13."
+        },
+        {
+          keywords: ['project', 'built', 'build', 'ride pool', 'skillswap', 'study planner'],
+          answer: "A few of her projects: Ride Pool (a peer-to-peer, two-wheeler ride-sharing app built with Next.js), Smart Study Planner (a React.js productivity app with real-time reminders), and SkillSwap (a Django + SQL skill-exchange platform with auth and messaging)."
+        },
+        {
+          keywords: ['certif', 'achievement', 'award', 'nsoc', 'patent', 'research', 'coursera', 'kaggle', 'nptel', 'cisco', 'cseh', 'open source'],
+          answer: "She's an open source contributor at NSOC '26, holds certifications in Python for Data Science & AI (Coursera), Intro to Machine Learning (Kaggle), Cloud Computing (NPTEL), and Intro to Cyber Security (Cisco) \u2014 and has a patent filed for SafeHaven FOSS, an emergency communication app. She's also a member of the CSEH Club."
+        },
+        {
+          keywords: ['contact', 'email', 'phone', 'reach', 'number', 'linkedin', 'github', 'hire', 'connect'],
+          answer: "You can reach her at jahnavil045@gmail.com or +91 9686638478 \u2014 she's based in Bengaluru, Karnataka."
+        },
+        {
+          keywords: ['hi', 'hello', 'hey', 'yo', 'sup'],
+          answer: "Hey! I'm JGPT \u2014 ask me about Jahnavi's skills, experience, projects, education, or how to reach her."
+        }
+      ];
+      function getJGPTAnswer(q) {
+        var text = q.toLowerCase();
+        for (var i = 0; i < JGPT_KB.length; i++) {
+          var entry = JGPT_KB[i];
+          for (var j = 0; j < entry.keywords.length; j++) {
+            if (text.indexOf(entry.keywords[j]) !== -1) {
+              return entry.answer;
+            }
+          }
+        }
+        return "Sorry, I don't have relevant info on that. Try asking about her skills, experience, projects, education, or how to get in touch!";
+      }
+      function addJGPTMessage(text, who) {
+        var wrap = document.getElementById('jgpt-messages');
+        var bubble = document.createElement('div');
+        bubble.className = 'jgpt-msg ' + who;
+        bubble.textContent = text;
+        wrap.appendChild(bubble);
+        wrap.scrollTop = wrap.scrollHeight;
+      }
+      function sendJGPTQuery(q) {
+        q = (q || '').trim();
+        if (!q) return;
+        addJGPTMessage(q, 'user');
+        document.getElementById('jgpt-input').value = '';
+        setTimeout(function () {
+          addJGPTMessage(getJGPTAnswer(q), 'bot');
+        }, 350);
+      }
+      function initJGPT() {
+        addJGPTMessage("Hi! I'm JGPT \u2014 ask me about Jahnavi's skills, experience, projects, or education.", 'bot');
+      }
+      document.getElementById('jgpt-send').addEventListener('click', function () {
+        sendJGPTQuery(document.getElementById('jgpt-input').value);
+      });
+      document.getElementById('jgpt-input').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { sendJGPTQuery(this.value); }
+      });
+      document.querySelectorAll('.jgpt-chip').forEach(function (btn) {
+        btn.addEventListener('click', function () { sendJGPTQuery(btn.dataset.q); });
+      });
+
+      /* ---------- Taskbar active-window dots (Windows-style) ---------- */
+      function syncTaskbarActive() {
+        document.querySelectorAll('.task-btn[data-window-id]').forEach(function (btn) {
+          var w = document.getElementById(btn.dataset.windowId);
+          btn.classList.toggle('active', !!w && w.classList.contains('open'));
+        });
+      }
+
+      /* Live clock */
+      function tick() {
+        var now = new Date();
+        var h = now.getHours();
+        var m = now.getMinutes();
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12; if (h === 0) h = 12;
+        document.getElementById('clock-time').textContent = h + ':' + String(m).padStart(2, '0') + ' ' + ampm;
+        document.getElementById('clock-date').textContent = now.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric', year: 'numeric' });
+      }
+      tick(); setInterval(tick, 1000);
+
+      /* No auto-open */
+      syncTaskbarActive();
+    })();
+  </script>
+
+</body>
+
+</html>
